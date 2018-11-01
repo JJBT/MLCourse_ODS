@@ -1,4 +1,6 @@
 .idea
 .ipynb_checkpoints
 dataset
-Kaggle
+Kaggle/**/*.csv
+Kaggle/**/*.json
+
