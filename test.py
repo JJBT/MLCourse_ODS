@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
+import random
 
 
 def PolynomialRegression(degree=2, **kwargs):
@@ -22,15 +23,27 @@ def make_data(N, err=1.0, rseed=1):
     return X, y
 
 
-X, y = make_data(40)
+
+X = np.array([[1, 2, 3],
+              [3, 4, 5]])
 
 
-X_test = np.linspace(-0.1, 1.1, 500)[:, None]
-plt.scatter(X.ravel(), y, color='black')
-axis = plt.axis()
-for degree in [1, 3, 5]:
-    y_test = PolynomialRegression(degree).fit(X, y).predict(X_test)
-    plt.plot(X_test.ravel(), y_test, label='degree={0}'.format(degree))
-plt.xlim(-0.1, 1.0)
-plt.ylim(-2, 12)
-plt.legend(loc='best')
+def _find_splits(X):
+    """Find all possible split values."""
+    split_values = set()
+
+    # Get unique values in a sorted order
+    x_unique = list(np.unique(X))
+    print(x_unique)
+    for i in range(1, len(x_unique)):
+        # Find a point between two values
+        average = (x_unique[i - 1] + x_unique[i]) / 2.0
+        split_values.add(average)
+
+    return list(split_values)
+
+
+print(_find_splits(X))
+
+
+subset = random.sample(list(range(0, X.shape[1])), 3)
